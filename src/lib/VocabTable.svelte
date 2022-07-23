@@ -1,6 +1,9 @@
 <script>
-    import { Status } from "../func/stores";
+    import { Hidden, Status } from "../func/stores";
     $: vocab = $Status.vocab;
+    $: hidden = new Set($Hidden);
+
+    $: entries = vocab.filter((entry) => !hidden.has(entry.id));
 
     const formatContext = (entry) => {
         const { context, word } = entry;
@@ -13,15 +16,9 @@
         }
     };
 
-    const hideWord = (entry) => {
-        console.log("Hide word", entry.word);
-        alert("Not implemented yet");
+    const hide = (entry) => {
+        Hidden.update((value) => [...value, entry.id]);
     };
-
-    const hideContext = (entry) => {
-        console.log("Hide context", entry.context);        
-        alert("Not implemented yet");
-    }
 </script>
 
 <table>
@@ -32,7 +29,7 @@
         <th>Actions</th>
     </tr>
 
-    {#each vocab as entry}
+    {#each entries as entry}
         <tr>
             <td>{entry.word}</td>
             <td>
@@ -43,8 +40,7 @@
             <td>{entry.frequency ?? "-"}</td>
             <td>
                 <div class="actions">
-                    <div on:click={() => hideWord(entry)}>Hide Word</div>
-                    <div on:click={() => hideContext(entry)}>Hide Context</div>
+                    <div on:click={() => hide(entry)}>Hide</div>
                 </div>
             </td>
         </tr>
