@@ -16,9 +16,18 @@
         console.log("file name", file.name);
         const buffer = await file.arrayBuffer();
 
-        const vocab = await parseVocabDb(buffer);
+        let vocab = await parseVocabDb(buffer);
 
         console.log('parse vocab', vocab);
+
+        vocab = vocab.map((entry) => ({
+            ...entry,
+            // @ts-ignore
+            frequency: innocent_terms_complete[entry.word]
+        }));
+
+        vocab.sort((a, b) => (b.frequency ?? 0) - (a.frequency ?? 0));
+        console.log("sorted vocab", vocab);
 
         Status.set({
             state: READY,
@@ -39,6 +48,6 @@
 
 <style>
     .vocab {
-        color: slategray;
+        color: rgb(0, 155, 255);
     }
 </style>

@@ -14,11 +14,15 @@ export const parseVocabDb = async (buffer) => {
     let res = db.exec("SELECT name FROM sqlite_schema WHERE type='table' AND name NOT LIKE 'sqlite_%'");
     console.log("SELECT...", res);
 
-    res = db.exec("SELECT word_key, usage FROM LOOKUPS");
+    res = db.exec(
+        "SELECT LOOKUPS.word_key, LOOKUPS.usage, WORDS.word \
+        FROM 'LOOKUPS' \
+        INNER JOIN 'WORDS' ON LOOKUPS.word_key=WORDS.id");
     console.log("SELECT...", res);
 
     return res[0].values.map(entry => ({
         key: entry[0],
+        word: entry[2],
         context: entry[1]
     }));
 };

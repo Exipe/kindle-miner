@@ -8,16 +8,23 @@ import VocabTable from "./lib/VocabTable.svelte";
 
 <main>
     <h1>Kindle Miner</h1>
+    <hr />
 
-    {#if state == INITIAL}
-        <VocabSelector />
-    {:else if state == READY}
-        <VocabTable />
-    {/if}
+    <div id="content">
+        {#if state == INITIAL}
+            <VocabSelector />
+        {:else if state == READY}
+            <VocabTable />
+        {/if}
+    </div>
 </main>
 
 <style>
-    main {
+    h1 {
+        text-align: center;
+    }
+
+    #content {
         display: flex;
         flex-direction: column;
         align-items: center;
