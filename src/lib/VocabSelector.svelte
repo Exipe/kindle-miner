@@ -1,6 +1,6 @@
 <script>
     import { parseVocabDb } from "../func/sql";
-    import { READY, Status } from "../func/stores";
+    import { READY_STATE, Status } from "../func/stores";
 
     let selected = false;
 
@@ -30,7 +30,7 @@
         console.log("sorted vocab", vocab);
 
         Status.set({
-            state: READY,
+            state: READY_STATE,
             vocab,
         });
     };

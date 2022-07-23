@@ -1,7 +1,7 @@
 <script>
-    import { INITIAL, READY, Status } from "./func/stores";
+    import { INITIAL_STATE, READY_STATE, Status } from "./func/stores";
     import VocabSelector from "./lib/VocabSelector.svelte";
-import VocabTable from "./lib/VocabTable.svelte";
+    import VocabTable from "./lib/VocabTable.svelte";
 
     $: state = $Status.state;
 </script>
@@ -11,9 +11,9 @@ import VocabTable from "./lib/VocabTable.svelte";
     <hr />
 
     <div id="content">
-        {#if state == INITIAL}
+        {#if state == INITIAL_STATE}
             <VocabSelector />
-        {:else if state == READY}
+        {:else if state == READY_STATE}
             <VocabTable />
         {/if}
     </div>
